@@ -1,0 +1,86 @@
+import type { PageServerLoad, Actions } from './$types';
+import { v4 as uuidv4 } from 'uuid';
+import { config } from 'dotenv';
+import prisma from '$lib/server/prisma';
+import process from 'process';
+
+config();
+
+export const load = (async ({ cookies }) => {
+	const token = cookies.get('token');
+	let loggedIn = false;
+
+	const tokenFromDatabase = await prisma.login.findFirst({
+		where: {
+			token: token
+		}
+	});
+
+	if (tokenFromDatabase) {
+		if (tokenFromDatabase.expiration >= new Date()) {
+			loggedIn = true;
+		}
+	}
+
+	if (loggedIn) {
+		const games = await prisma.game.findMany();
+		const organisers = await prisma.organiser.findMany();
+		const locations = await prisma.location.findMany();
+
+		return {
+			loggedIn,
+			games,
+			organisers,
+			locations
+		};
+	}
+
+	return {
+		loggedIn
+	};
+}) satisfies PageServerLoad;
+
+export const actions = {
+	login: async ({ cookies, request }) => {
+		const formData = await request.formData();
+		const password = formData.get('password');
+
+		if (password === process.env.ADMIN_PASSWORD) {
+			const newToken = uuidv4();
+
+			await prisma.login.create({
+				data: {
+					token: newToken,
+					expiration: new Date(Date.now() + 1000 * 60 * 60)
+				}
+			});
+
+			cookies.set('token', newToken, {
+				maxAge: 60 * 60,
+				path: '/'
+			});
+
+			return {
+				attemptSuccessful: true
+			};
+		} else {
+			return {
+				attemptSuccessful: false
+			};
+		}
+	},
+
+	logout: async ({ cookies }) => {
+		const token = cookies.get('token');
+
+		await prisma.login.deleteMany({
+			where: {
+				token: token
+			}
+		});
+
+		cookies.delete('token', {
+			path: '/'
+		});
+	}
+} satisfies Actions;

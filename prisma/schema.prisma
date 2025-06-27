@@ -66,3 +66,9 @@ model PlayerLocation {
   Player         Player   @relation(fields: [playerId], references: [studentId])
   Location       Location @relation(fields: [locationId], references: [id])
 }
+
+model Login {
+  id         Int      @id @default(autoincrement())
+  token      String   @unique
+  expiration DateTime
+}
