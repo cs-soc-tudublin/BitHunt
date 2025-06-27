@@ -107,6 +107,37 @@ export const actions = {
 		return;
 	},
 
+	editGame: async ({ request }) => {
+		const formData = await request.formData();
+		const id = Number(formData.get('gameId'));
+		const name = formData.get('game-name') as string;
+		const description = formData.get('game-description') as string;
+		const organisers = String(formData.getAll('organisers'));
+		const active = formData.get('activate') === 'true';
+		const prize = formData.get('prizes') as string;
+		const prizeQty = Number(formData.get('prize-qty'));
+		const leaderboard = formData.get('leaderboard') === 'true';
+
+		console.log(formData);
+
+		await prisma.game.update({
+			where: {
+				id: id
+			},
+			data: {
+				name,
+				description,
+				organisers,
+				active,
+				prizes: prize,
+				prizeQty,
+				enableLeaderboard: leaderboard
+			}
+		});
+
+		return;
+	},
+
 	deleteGame: async ({ request }) => {
 		const formData = await request.formData();
 		const gameId = Number(formData.get('gameId'));

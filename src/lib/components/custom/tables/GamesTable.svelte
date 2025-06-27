@@ -28,6 +28,7 @@
 					>
 					<Table.Cell class="flex flex-row items-center justify-between">
 						<GameDialogue
+							id={item.id}
 							name={item.name}
 							textDesc={item.description}
 							organisers={item.organisers}

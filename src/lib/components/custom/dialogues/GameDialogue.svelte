@@ -8,6 +8,7 @@
 	import { Switch } from '$lib/components/shad/ui/switch';
 
 	let {
+		id = $bindable(0),
 		name = $bindable(''),
 		textDesc = $bindable(''),
 		organisers = $bindable(''),
@@ -17,6 +18,7 @@
 		leaderboard = $bindable(false),
 		buttonText = 'Create'
 	}: {
+		id: number;
 		name: string;
 		textDesc: string;
 		organisers: string;
@@ -54,7 +56,9 @@
 	{/snippet}
 
 	{#snippet body()}
-		<form class="flex flex-col" action="?/createGame" method="POST" use:enhance>
+		<form class="flex flex-col" action="?/{buttonText.toLowerCase()}Game" method="POST" use:enhance>
+			<Input type="hidden" name="gameId" value={id} />
+
 			<Label for="game-name" class="my-4"
 				>Game Name <span class="font-bold text-red-500">*</span></Label
 			>
@@ -79,7 +83,7 @@
 			<Input type="number" id="prize-qty" name="prize-qty" bind:value={prizeQty} min="1" />
 
 			<Label for="leaderboard" class="my-4">Activate Leaderboard</Label>
-			<Input type="hidden" id="leaderboard" name="activate" bind:value={leaderboard} />
+			<Input type="hidden" id="leaderboard" name="leaderboard" bind:value={leaderboard} />
 			<Switch id="leaderboard" bind:checked={leaderboard} />
 
 			<Button type="submit" class="my-4">{buttonText}</Button>
