@@ -1,0 +1,39 @@
+services:
+  bithunt:
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.bithunt.rule=Host(`hunt.cspp.ie`)'
+      - 'traefik.http.services.bithunt.loadbalancer.server.port=3000'
+      - 'traefik.http.routers.bithunt.entrypoints=websecure'
+      - 'traefik.http.routers.bithunt.tls.certresolver=external-resolver'
+      - 'external-service=true'
+      - "traefik.docker.network=traefik-external"
+    build: .
+    container_name: bithunt
+    environment:
+      DATABASE_URL: postgresql://prisma:prisma@db:5432/prismadb?schema=public
+    depends_on:
+      - db
+    networks:
+      - traefik-external
+      - bithunt
+
+  db:
+    image: postgres:13
+    container_name: bithunt-db
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+      POSTGRES_DB: prismadb
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - bithunt
+
+networks:
+  traefik-external:
+    external: true
+  bithunt:
+
+volumes:
+  postgres-data:
