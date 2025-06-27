@@ -24,13 +24,11 @@ export const load = (async ({ cookies }) => {
 
 	if (loggedIn) {
 		const games = await prisma.game.findMany();
-		const organisers = await prisma.organiser.findMany();
 		const locations = await prisma.location.findMany();
 
 		return {
 			loggedIn,
 			games,
-			organisers,
 			locations
 		};
 	}
@@ -82,5 +80,43 @@ export const actions = {
 		cookies.delete('token', {
 			path: '/'
 		});
+	},
+
+	createGame: async ({ request }) => {
+		const formData = await request.formData();
+		const name = formData.get('game-name') as string;
+		const description = formData.get('game-description') as string;
+		const organisers = String(formData.getAll('organisers'));
+		const active = Boolean(formData.get('activate'));
+		const prize = formData.get('prizes') as string;
+		const prizeQty = Number(formData.get('prize-qty'));
+		const leaderboard = Boolean(formData.get('leaderboard'));
+
+		await prisma.game.create({
+			data: {
+				name,
+				description,
+				organisers,
+				active,
+				prizes: prize,
+				prizeQty,
+				enableLeaderboard: leaderboard
+			}
+		});
+
+		return;
+	},
+
+	deleteGame: async ({ request }) => {
+		const formData = await request.formData();
+		const gameId = Number(formData.get('gameId'));
+
+		await prisma.game.delete({
+			where: {
+				id: gameId
+			}
+		});
+
+		return;
 	}
 } satisfies Actions;

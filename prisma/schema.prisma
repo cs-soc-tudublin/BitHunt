@@ -14,27 +14,16 @@ datasource db {
 }
 
 model Game {
-  id                Int         @id @default(autoincrement())
+  id                Int        @id @default(autoincrement())
   name              String
-  organisers        Organiser[]
-  active            Boolean     @default(false)
+  organisers        String
+  active            Boolean    @default(false)
   prizes            String?
   prizeQty          Int?
   description       String?
-  enableLeaderboard Boolean     @default(true)
+  enableLeaderboard Boolean    @default(true)
   players           Player[]
   locations         Location[]
-}
-
-model Organiser {
-  id       Int     @id @default(autoincrement())
-  name     String
-  link     String?
-  showLink Boolean @default(true)
-  image    String?
-  showLogo Boolean @default(false)
-  Game     Game?   @relation(fields: [gameId], references: [id])
-  gameId   Int?
 }
 
 model Player {
