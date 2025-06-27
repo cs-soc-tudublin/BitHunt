@@ -6,10 +6,63 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Game {
+  id                Int         @id @default(autoincrement())
+  name              String
+  organisers        Organiser[]
+  active            Boolean     @default(false)
+  prizes            String?
+  prizeQty          Int?
+  description       String?
+  enableLeaderboard Boolean     @default(true)
+  players           Player[]
+  locations         Location[]
+}
+
+model Organiser {
+  id       Int     @id @default(autoincrement())
+  name     String
+  link     String?
+  showLink Boolean @default(true)
+  image    String?
+  showLogo Boolean @default(false)
+  Game     Game?   @relation(fields: [gameId], references: [id])
+  gameId   Int?
+}
+
+model Player {
+  studentId      String           @id
+  name           String
+  showOnBoard    Boolean          @default(true)
+  completed      Boolean          @default(false)
+  Game           Game?            @relation(fields: [gameId], references: [id])
+  gameId         Int?
+  PlayerLocation PlayerLocation[]
+}
+
+model Location {
+  id             Int              @id @default(autoincrement())
+  name           String
+  hint           String
+  active         Boolean          @default(true)
+  qrCode         String
+  Game           Game?            @relation(fields: [gameId], references: [id])
+  gameId         Int?
+  PlayerLocation PlayerLocation[]
+}
+
+model PlayerLocation {
+  id             Int      @id @default(autoincrement())
+  playerId       String
+  locationId     Int
+  completionTime DateTime @default(now())
+  Player         Player   @relation(fields: [playerId], references: [studentId])
+  Location       Location @relation(fields: [locationId], references: [id])
 }
