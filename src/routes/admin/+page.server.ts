@@ -118,8 +118,6 @@ export const actions = {
 		const prizeQty = Number(formData.get('prize-qty'));
 		const leaderboard = formData.get('leaderboard') === 'true';
 
-		console.log(formData);
-
 		await prisma.game.update({
 			where: {
 				id: id
@@ -143,6 +141,62 @@ export const actions = {
 		const gameId = Number(formData.get('gameId'));
 
 		await prisma.game.delete({
+			where: {
+				id: gameId
+			}
+		});
+
+		return;
+	},
+
+	createLocation: async ({ url, request }) => {
+		const formData = await request.formData();
+		const name = formData.get('location-name') as string;
+		const hint = formData.get('hint') as string;
+		const active = Boolean(formData.get('activate'));
+		const gameId = Number(formData.getAll('game'));
+
+		await prisma.location.create({
+			data: {
+				name,
+				hint,
+				active,
+				gameId,
+				qrCode: 'https://' + url.host + '/qr/' + uuidv4()
+			}
+		});
+
+		return;
+	},
+
+	editLocation: async ({ request }) => {
+		const formData = await request.formData();
+		const id = Number(formData.get('id'));
+		const name = formData.get('location-name') as string;
+		const hint = formData.get('hint') as string;
+		const active = Boolean(formData.get('activate'));
+		const gameId = Number(formData.getAll('game'));
+
+		await prisma.location.update({
+			where: {
+				id: id
+			},
+			data: {
+				name,
+				hint,
+				active,
+				gameId
+			}
+		});
+
+		return;
+	},
+
+	deleteLocation: async ({ request }) => {
+		const formData = await request.formData();
+		const gameId = Number(formData.get('id'));
+
+		await prisma.location.delete({
 			where: {
 				id: gameId
 			}

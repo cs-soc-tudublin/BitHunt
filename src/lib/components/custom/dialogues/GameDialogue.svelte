@@ -6,6 +6,7 @@
 	import { Input } from '$lib/components/shad/ui/input';
 	import { enhance } from '$app/forms';
 	import { Switch } from '$lib/components/shad/ui/switch';
+	import Required from '$lib/components/custom/Required.svelte';
 
 	let {
 		id = $bindable(0),
@@ -18,15 +19,15 @@
 		leaderboard = $bindable(false),
 		buttonText = 'Create'
 	}: {
-		id: number;
-		name: string;
-		textDesc: string;
-		organisers: string;
-		prizes: string;
-		prizeQty: number;
-		activate: boolean;
-		leaderboard: boolean;
-		buttonText: string;
+		id?: number;
+		name?: string;
+		textDesc?: string;
+		organisers?: string;
+		prizes?: string;
+		prizeQty?: number;
+		activate?: boolean;
+		leaderboard?: boolean;
+		buttonText?: 'Create' | 'Edit';
 	} = $props();
 </script>
 
@@ -59,17 +60,13 @@
 		<form class="flex flex-col" action="?/{buttonText.toLowerCase()}Game" method="POST" use:enhance>
 			<Input type="hidden" name="gameId" value={id} />
 
-			<Label for="game-name" class="my-4"
-				>Game Name <span class="font-bold text-red-500">*</span></Label
-			>
+			<Label for="game-name" class="my-4">Game Name<Required /></Label>
 			<Input type="text" id="game-name" name="game-name" bind:value={name} required />
 
 			<Label for="game-description" class="my-4">Description</Label>
 			<Input id="game-description" type="text" name="description" bind:value={textDesc} />
 
-			<Label for="organisers" class="my-4"
-				>Organisers <span class="font-bold text-red-500">*</span></Label
-			>
+			<Label for="organisers" class="my-4">Organisers <Required /></Label>
 			<Input type="text" name="organisers" id="organisers" bind:value={organisers} />
 
 			<Label for="activate" class="my-4">Set Game as Active</Label>
@@ -80,13 +77,15 @@
 			<Input type="text" id="prizes" name="prizes" bind:value={prizes} />
 
 			<Label for="prize-qty" class="my-4">Prize Quantity</Label>
-			<Input type="number" id="prize-qty" name="prize-qty" bind:value={prizeQty} min="1" />
+			<Input type="number" id="prize-qty" name="prize-qty" bind:value={prizeQty} />
 
 			<Label for="leaderboard" class="my-4">Activate Leaderboard</Label>
 			<Input type="hidden" id="leaderboard" name="leaderboard" bind:value={leaderboard} />
 			<Switch id="leaderboard" bind:checked={leaderboard} />
 
-			<Button type="submit" class="my-4">{buttonText}</Button>
+			<div class="flex w-full flex-col items-end">
+				<Button type="submit" class="my-4">{buttonText}</Button>
+			</div>
 		</form>
 	{/snippet}
 </AbstractDialogue>

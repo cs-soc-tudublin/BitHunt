@@ -2,11 +2,11 @@
 	import * as Dialog from '$lib/components/shad/ui/dialog/index.js';
 	import { buttonVariants } from '$lib/components/shad/ui/button/index.js';
 
-	let { button, header, description, body, footer = null } = $props();
+	let { button, header, description, body, footer = null, disabled = false } = $props();
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>
+	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })} {disabled}>
 		{@render button()}
 	</Dialog.Trigger>
 	<Dialog.Content class="sm:max-w-[425px]">

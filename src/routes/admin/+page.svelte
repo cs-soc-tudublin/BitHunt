@@ -10,10 +10,12 @@
 	import LocationsDialogue from '$lib/components/custom/dialogues/LocationsDialogue.svelte';
 	import GamesTable from '$lib/components/custom/tables/GamesTable.svelte';
 	import LocationsTable from '$lib/components/custom/tables/LocationsTable.svelte';
+	import * as Tooltip from '$lib/components/shad/ui/tooltip/index.js';
 
 	let { data, form }: PageProps = $props();
 
 	let tab = $state('games');
+	let locationCreationDisabled = $derived(data?.games?.length === 0);
 </script>
 
 <svelte:head>
@@ -63,7 +65,20 @@
 					{#if tab === 'games'}
 						<GameDialogue />
 					{:else if tab === 'locations'}
-						<LocationsDialogue />
+						<Tooltip.Provider delayDuration={0} disabled={!locationCreationDisabled}>
+							<Tooltip.Root>
+								<Tooltip.Trigger>
+									<LocationsDialogue game={data?.games} />
+								</Tooltip.Trigger>
+								<Tooltip.Content>
+									<p class="text-pretty">
+										Locations cannot be created without any games.
+										<br />
+										Create a game first.
+									</p>
+								</Tooltip.Content>
+							</Tooltip.Root>
+						</Tooltip.Provider>
 					{/if}
 				</div>
 			</div>
@@ -71,7 +86,7 @@
 				<GamesTable content={data?.games} />
 			</Tabs.Content>
 			<Tabs.Content value="locations" class="w-full">
-				<LocationsTable content={data?.locations} />
+				<LocationsTable content={data?.locations} games={data?.games} />
 			</Tabs.Content>
 		</Tabs.Root>
 	</Card>

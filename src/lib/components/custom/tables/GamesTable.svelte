@@ -1,8 +1,8 @@
 <script>
 	import AbstractTable from '$lib/components/custom/tables/AbstractTable.svelte';
 	import * as Table from '$lib/components/shad/ui/table/index';
-	import * as Popover from '$lib/components/shad/ui/popover/index.js';
-	import { Button, buttonVariants } from '$lib/components/shad/ui/button/index.js';
+	import * as Popover from '$lib/components/shad/ui/popover/index';
+	import { Button, buttonVariants } from '$lib/components/shad/ui/button/index';
 	import GameDialogue from '$lib/components/custom/dialogues/GameDialogue.svelte';
 	import { Trash } from '@lucide/svelte';
 	import { enhance } from '$app/forms';
