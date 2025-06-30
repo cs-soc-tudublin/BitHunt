@@ -16,7 +16,7 @@
 		hint = $bindable(''),
 		activate = $bindable(true),
 		game = $bindable([]),
-		selected = $bindable(null),
+		selected = $bindable(''),
 		disabled = $bindable(false),
 		buttonText = $bindable('Create')
 	}: {
@@ -25,13 +25,13 @@
 		hint?: string;
 		activate?: boolean;
 		game?: Array<{ id: number; name: string }>;
-		selected?: string | null | number;
+		selected?: string;
 		disabled?: boolean;
 		buttonText?: 'Create' | 'Edit';
 	} = $props();
 
 	let selectTrigger = $derived(
-		selected !== null
+		selected !== ''
 			? game.find(({ id }) => id.toString() === selected.toString())?.name
 			: 'Select Games'
 	);
@@ -61,7 +61,7 @@
 
 	{#snippet body()}
 		<form
-			class="flex flex-col"
+			class="flex w-full flex-col"
 			action="?/{buttonText.toLowerCase()}Location"
 			method="POST"
 			use:enhance
@@ -80,7 +80,7 @@
 			<Label for="game" class="my-4">Games <Required /></Label>
 			<Input type="hidden" id="game" name="game" value={selected} />
 			<Select.Root type="single" bind:value={selected} disabled={overallDisable}>
-				<Select.Trigger class="w-[180px]">{selectTrigger}</Select.Trigger>
+				<Select.Trigger class="w-fit min-w-[180px]">{selectTrigger}</Select.Trigger>
 				<Select.Content>
 					{#each game as game (game)}
 						<Select.Item value={game.id.toString()}>{game.name}</Select.Item>
