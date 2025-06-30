@@ -36,6 +36,7 @@
 							hint={item.hint}
 							activate={item.active}
 							game={games}
+							selected={item.gameId ? games.find(({ id }) => id === item.gameId).id : ''}
 							disabled={false}
 							buttonText="Edit"
 						/>

@@ -16,21 +16,24 @@
 		hint = $bindable(''),
 		activate = $bindable(true),
 		game = $bindable([]),
+		selected = $bindable(null),
 		disabled = $bindable(false),
-		buttonText = 'Create'
+		buttonText = $bindable('Create')
 	}: {
 		id?: number;
 		name?: string;
 		hint?: string;
 		activate?: boolean;
 		game?: Array<{ id: number; name: string }>;
+		selected?: string | null | number;
 		disabled?: boolean;
 		buttonText?: 'Create' | 'Edit';
 	} = $props();
 
-	let selected = $state('');
 	let selectTrigger = $derived(
-		selected.length > 0 ? game.map((game) => game.name).join(', ') : 'Select Games'
+		selected !== null
+			? game.find(({ id }) => id.toString() === selected.toString())?.name
+			: 'Select Games'
 	);
 
 	let overallDisable = $derived(buttonText === 'Create' ? game.length === 0 || disabled : false);
@@ -93,7 +96,7 @@
 						</Tooltip.Trigger>
 						<Tooltip.Content>
 							<p class="text-pretty">
-								To create a location, you must select at least one game.
+								To {buttonText.toLowerCase()} a location, you must select at least one game.
 								<br />
 								Please select a game from the list.
 							</p>
