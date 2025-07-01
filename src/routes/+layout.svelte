@@ -2,6 +2,7 @@
 	import '../app.css';
 	import ModeToggle from '$lib/components/custom/ModeToggle.svelte';
 	import { ModeWatcher } from 'mode-watcher';
+
 	let { children } = $props();
 </script>
 

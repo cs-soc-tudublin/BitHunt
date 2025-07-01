@@ -64,7 +64,7 @@
 			<Input type="text" id="game-name" name="game-name" bind:value={name} required />
 
 			<Label for="game-description" class="my-4">Description</Label>
-			<Input id="game-description" type="text" name="description" bind:value={textDesc} />
+			<Input id="game-description" type="text" name="game-description" bind:value={textDesc} />
 
 			<Label for="organisers" class="my-4">Organisers <Required /></Label>
 			<Input type="text" name="organisers" id="organisers" bind:value={organisers} />
