@@ -1,6 +1,7 @@
 import type { LayoutServerLoad } from './$types';
 import prisma from '$lib/server/prisma';
 import { config } from 'dotenv';
+import { redirect } from '@sveltejs/kit';
 
 config();
 
@@ -46,6 +47,10 @@ export const load = (async ({ cookies }) => {
 				playerId: player.studentId
 			}
 		});
+
+		if (player.completed && !player.receivedPrize) {
+			throw redirect(303, '/win');
+		}
 
 		return {
 			login: {
