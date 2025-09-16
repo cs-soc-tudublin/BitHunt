@@ -81,16 +81,25 @@
 			{:else}
 				<div class="flex flex-col flex-wrap items-center justify-center gap-2">
 					<h1 class="text-xl font-bold">Hi {data.player?.name}!</h1>
-					<p>You have scanned {data.player?.scanned} codes so far. {motivationText}!</p>
+
+					{#if data.player.completed && data.player.prizeGiven}
+						<p>You've been given your prize. You can now log out. Congrats!</p>
+					{:else if data.player.completed}
+						<p>You've completed the treasure hunt. Go back to get your prize!</p>
+					{:else}
+						<p>You have scanned {data.player?.scanned} codes so far. {motivationText}!</p>
+					{/if}
 
 					<div class="flex w-full flex-row flex-wrap items-center justify-around gap-2">
-						<Button
-							onclick={() => (window.location.href = '/hint/' + data.player?.studentId)}
-							variant="default"
-						>
-							<MessageCircleQuestion class="mr-2" />
-							Current Hint
-						</Button>
+						{#if !data.player.completed && !data.player.prizeGiven}
+							<Button
+								onclick={() => (window.location.href = '/hint/' + data.player?.studentId)}
+								variant="default"
+							>
+								<MessageCircleQuestion class="mr-2" />
+								Current Hint
+							</Button>
+						{/if}
 
 						<Button
 							onclick={() => (window.location.href = '/logout/' + data.player?.studentId)}

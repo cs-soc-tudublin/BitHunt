@@ -31,6 +31,7 @@ model Player {
   name           String
   showOnBoard    Boolean          @default(true)
   completed      Boolean          @default(false)
+  receivedPrize  Boolean          @default(false)
   Game           Game             @relation(fields: [gameId], references: [id])
   gameId         Int
   nextLocation   Int?

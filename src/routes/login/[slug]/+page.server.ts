@@ -48,7 +48,7 @@ export const actions = {
 			});
 
 			cookies.set('playerToken', loginToken, {
-				maxAge: 60 * 60,
+				maxAge: 1000 * 60 * 60,
 				path: '/'
 			});
 

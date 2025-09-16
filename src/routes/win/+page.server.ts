@@ -3,7 +3,7 @@ import prisma from '$lib/server/prisma';
 import { redirect } from '@sveltejs/kit';
 import { getCompletedLocationsCount } from '$lib/server/lib';
 
-export const load: PageServerLoad = async ({ cookies }) => {
+export const load: PageServerLoad = async ({ cookies, url }) => {
 	const cookie = cookies.get('playerToken');
 
 	const checkToken = await prisma.login.findFirst({
@@ -16,11 +16,11 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	if (checkToken) {
 		const player = await prisma.player.findFirst({
 			where: {
-				studentId: checkToken.player
+				studentId: checkToken.player ? checkToken.player : ''
 			}
 		});
 
-		if ((await getCompletedLocationsCount(player.studentId, player.gameId)) === 0) {
+		if (player && (await getCompletedLocationsCount(player.studentId, player.gameId)) === 0) {
 			await prisma.player.update({
 				where: {
 					studentId: player.studentId
@@ -29,6 +29,11 @@ export const load: PageServerLoad = async ({ cookies }) => {
 					completed: true
 				}
 			});
+
+			return {
+				won: true,
+				link: `https://${url.host}/admin/${player.studentId}`
+			};
 		}
 	} else {
 		throw redirect(303, '/');

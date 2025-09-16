@@ -48,12 +48,18 @@ export const actions = {
 		} else {
 			const loginToken = uuidv4();
 
+			const locationIds = await prisma.location.findMany({
+				select: {
+					id: true
+				}
+			});
+
 			await prisma.player.create({
 				data: {
 					studentId,
 					name,
 					gameId,
-					nextLocation: Math.floor(Math.random() * (await prisma.location.count()))
+					nextLocation: locationIds[Math.floor(Math.random() * locationIds.length)].id
 				}
 			});
 

@@ -54,7 +54,9 @@ export const load = (async ({ cookies }) => {
 			player: {
 				name: player.name,
 				studentId: player.studentId,
-				scanned: totalScanned.length !== null ? totalScanned.length : 0
+				scanned: totalScanned.length !== null ? totalScanned.length : 0,
+				completed: player.completed,
+				prizeGiven: player.receivedPrize
 			},
 			game
 		};
