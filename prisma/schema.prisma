@@ -31,9 +31,13 @@ model Player {
   name           String
   showOnBoard    Boolean          @default(true)
   completed      Boolean          @default(false)
-  Game           Game?            @relation(fields: [gameId], references: [id])
-  gameId         Int?
+  Game           Game             @relation(fields: [gameId], references: [id])
+  gameId         Int
+  nextLocation   Int?
+  Location       Location?        @relation(fields: [nextLocation], references: [id])
   PlayerLocation PlayerLocation[]
+
+  Login Login[]
 }
 
 model Location {
@@ -45,6 +49,7 @@ model Location {
   Game           Game?            @relation(fields: [gameId], references: [id])
   gameId         Int?
   PlayerLocation PlayerLocation[]
+  Player         Player[]
 }
 
 model PlayerLocation {
@@ -59,5 +64,9 @@ model PlayerLocation {
 model Login {
   id         Int      @id @default(autoincrement())
   token      String   @unique
+  admin      Boolean  @default(false)
+  player     String?
   expiration DateTime
+
+  Player Player? @relation(fields: [player], references: [studentId])
 }

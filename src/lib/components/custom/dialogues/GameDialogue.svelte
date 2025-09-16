@@ -7,6 +7,7 @@
 	import { enhance } from '$app/forms';
 	import { Switch } from '$lib/components/shad/ui/switch';
 	import Required from '$lib/components/custom/Required.svelte';
+	import { Badge } from '$lib/components/shad/ui/badge/index.js';
 
 	let {
 		id = $bindable(0),
@@ -79,9 +80,13 @@
 			<Label for="prize-qty" class="my-4">Prize Quantity</Label>
 			<Input type="number" id="prize-qty" name="prize-qty" bind:value={prizeQty} />
 
-			<Label for="leaderboard" class="my-4">Activate Leaderboard</Label>
+			<Label for="leaderboard" class="my-4"
+				>Activate Leaderboard <span class="text-neutral-500"
+					><Badge variant="secondary">Disabled</Badge></span
+				></Label
+			>
 			<Input type="hidden" id="leaderboard" name="leaderboard" bind:value={leaderboard} />
-			<Switch id="leaderboard" bind:checked={leaderboard} />
+			<Switch disabled id="leaderboard" bind:checked={leaderboard} />
 
 			<div class="flex w-full flex-col items-end">
 				<Button type="submit" class="my-4">{buttonText}</Button>

@@ -19,7 +19,7 @@ services:
       - bithunt
 
   db:
-    image: postgres:13
+    image: postgres:17-alpine
     container_name: bithunt-db
     environment:
       POSTGRES_USER: prisma

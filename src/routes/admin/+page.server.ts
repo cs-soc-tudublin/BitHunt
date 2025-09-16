@@ -7,12 +7,13 @@ import process from 'process';
 config();
 
 export const load = (async ({ cookies }) => {
-	const token = cookies.get('token');
+	const token = cookies.get('adminToken');
 	let loggedIn = false;
 
 	const tokenFromDatabase = await prisma.login.findFirst({
 		where: {
-			token: token
+			token: token,
+			admin: true
 		}
 	});
 
@@ -49,13 +50,14 @@ export const actions = {
 			await prisma.login.create({
 				data: {
 					token: newToken,
+					admin: true,
 					expiration: new Date(Date.now() + 1000 * 60 * 60)
 				}
 			});
 
-			cookies.set('token', newToken, {
+			cookies.set('adminToken', newToken, {
 				maxAge: 60 * 60,
-				path: '/'
+				path: '/admin'
 			});
 
 			return {
@@ -87,10 +89,10 @@ export const actions = {
 		const name = formData.get('game-name') as string;
 		const description = formData.get('game-description') as string;
 		const organisers = String(formData.getAll('organisers'));
-		const active = Boolean(formData.get('activate'));
+		const active = formData.get('activate') === 'true';
 		const prize = formData.get('prizes') as string;
 		const prizeQty = Number(formData.get('prize-qty'));
-		const leaderboard = Boolean(formData.get('leaderboard'));
+		const leaderboard = formData.get('leaderboard') === 'true';
 
 		await prisma.game.create({
 			data: {
