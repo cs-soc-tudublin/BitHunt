@@ -19,6 +19,8 @@
 	<title>BitHunt</title>
 </svelte:head>
 
+<div class="absolute bottom-0 left-0 m-5 font-mono text-sm text-neutral-500">v2.01</div>
+
 <div class="w-full p-2 md:w-1/2 md:p-0">
 	<Card class="m-4 flex flex-col items-center justify-center text-center">
 		{#if data.game === null}

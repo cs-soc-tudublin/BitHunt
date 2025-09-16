@@ -49,6 +49,9 @@ export const actions = {
 			const loginToken = uuidv4();
 
 			const locationIds = await prisma.location.findMany({
+				where: {
+					gameId
+				},
 				select: {
 					id: true
 				}
