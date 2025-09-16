@@ -5,8 +5,10 @@ import { redirect } from '@sveltejs/kit';
 
 config();
 
-export const load = (async ({ cookies }) => {
+export const load = (async ({ cookies, url }) => {
 	const cookie = cookies.get('playerToken');
+	const path = url.pathname;
+
 	let player = null;
 
 	const doesTokenExist = await prisma.login.findFirst({
@@ -48,7 +50,7 @@ export const load = (async ({ cookies }) => {
 			}
 		});
 
-		if (player.completed && !player.receivedPrize) {
+		if (player.completed && !player.receivedPrize && path !== '/win') {
 			throw redirect(303, '/win');
 		}
 
