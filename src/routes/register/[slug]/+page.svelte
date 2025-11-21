@@ -27,7 +27,9 @@
 		<Input type="text" name="name" required />
 
 		<div class="my-4 flex flex-row items-center justify-around">
-			<Label>I agree to the Privacy Policy<Required /></Label>
+			<Label
+				>I agree to the <a href="/policy" class="underline">Privacy Policy</a><Required /></Label
+			>
 			<Checkbox id="policy" bind:checked={privacyAgreed} class="ml-2 h-6 w-6" required />
 		</div>
 

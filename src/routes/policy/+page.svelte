@@ -10,7 +10,7 @@
 	<div class="w-full text-center">
 		<h1 class="w-full text-center text-4xl font-black">PRIVACY POLICY</h1>
 		<h2 class="w-full text-center text-lg font-thin">
-			<span class="font-black">Last Updated:</span> 14/09/2025.
+			<span class="font-black">Last Updated:</span> 21/11/2025.
 		</h2>
 	</div>
 
@@ -21,8 +21,8 @@
 			<li>We only collect your name and Student Number for BitHunt.</li>
 			<li>The data we collect is used for BitHunt and not given to third parties.</li>
 			<li>
-				Your Student Number will be used to register you, for free, to CS++ if you are not already a
-				member.
+				Your Student Number will be used to register you, for free, to the organising group if you
+				are not already a member.
 			</li>
 			<li>
 				While the event is live, you have the right to ask for a copy of it, or have it removed.
@@ -42,8 +42,8 @@
 
 		<p>
 			This data is collected exclusively for the purpose of BitHunt, and to register you as a member
-			of CS++, for free. This information will not be used for any other purpose, or transferred to
-			third parties.
+			of the organising group, for free. This information will not be used for any other purpose, or
+			transferred to third parties.
 		</p>
 	</div>
 
@@ -54,7 +54,7 @@
 		<ul class="ml-4 list-disc">
 			<li>Letting players log in & play BitHunt</li>
 			<li>Verifying winners</li>
-			<li>Registering players as CS++ members, for free</li>
+			<li>Registering players as members, for free</li>
 		</ul>
 	</div>
 
@@ -62,7 +62,7 @@
 		<h1 class="mt-2 text-xl font-bold">Data Storage and Protection</h1>
 		<p>
 			We employ reasonable data protection measures to safeguard the data collected. Your data is
-			stored securely, and is accessible only to authorised personnel of the CS++ Society.
+			stored securely, and is accessible only to authorised personnel of the organising group.
 		</p>
 	</div>
 
@@ -81,8 +81,8 @@
 		<h1 class="mt-2 text-xl font-bold">Data Removal</h1>
 		<p>
 			Your data will be automatically removed at the end of the game you have competed in, and after
-			you have been registered as a member of CS++. Should you wish to have your data removed before
-			this, you can sent a request to CS++.
+			you have been registered as a member of the organising group. Should you wish to have your
+			data removed before this, you can sent a request to the organising group.
 		</p>
 	</div>
 
@@ -91,21 +91,6 @@
 		<p>
 			We reserve the right to make changes to this Privacy Policy at our discretion. All changes
 			will be added to this page. We encourage our users to check this policy regularly.
-		</p>
-	</div>
-
-	<div id="contact">
-		<h1 class="mt-2 text-xl font-bold">Contacting CS++</h1>
-		<p>
-			If you have questions or concerns relating to this Privacy Policy, our data practices, or
-			BitHunt, please contact CS++ at:
-		</p>
-
-		<p>
-			<a
-				href="mailto:comp@societies.tudublin.ie?subject=BitHunt Privacy Policy"
-				class="font-bold text-blue-500">comp@societies.tudublin.ie</a
-			>
 		</p>
 	</div>
 </Card>

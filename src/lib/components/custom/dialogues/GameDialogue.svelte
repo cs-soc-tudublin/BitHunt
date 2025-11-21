@@ -82,7 +82,7 @@
 
 			<Label for="leaderboard" class="my-4"
 				>Activate Leaderboard <span class="text-neutral-500"
-					><Badge variant="secondary">Disabled</Badge></span
+					><Badge variant="secondary">Not Implemented</Badge></span
 				></Label
 			>
 			<Input type="hidden" id="leaderboard" name="leaderboard" bind:value={leaderboard} />

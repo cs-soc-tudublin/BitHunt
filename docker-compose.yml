@@ -8,7 +8,7 @@ services:
       - 'traefik.http.routers.bithunt.tls.certresolver=external-resolver'
       - 'external-service=true'
       - 'traefik.docker.network=traefik-external'
-    build: .
+    image: ghcr.io/cs-soc-tudublin/bithunt:latest
     container_name: bithunt
     environment:
       DATABASE_URL: postgresql://prisma:prisma@db:5432/prismadb?schema=public
